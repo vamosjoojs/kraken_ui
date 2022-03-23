@@ -1,0 +1,9 @@
+.containerUpPage {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+
+.buttons {
+    margin: 10px;
+  }
