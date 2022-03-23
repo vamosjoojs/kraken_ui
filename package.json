@@ -1,6 +1,9 @@
 {
   "name": "kraken-ui",
   "version": "0.1.0",
+  "engines": {
+    "node": "16.13.2"
+  },
   "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.2",
@@ -18,7 +21,8 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "node server.js",
+    "dev": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
