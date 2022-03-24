@@ -34,7 +34,6 @@ export default function PostModal(props) {
         }
     }, sendClip)
 
-
     return (
         <Modal
             {...props}

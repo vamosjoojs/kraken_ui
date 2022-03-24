@@ -26,13 +26,19 @@ function SetModalPlayer(props) {
 function CreatePostInstagram(props) {
     const [modalShow, setModalShow] = React.useState(false);
 
+    const style = {
+        background: '#C13584',
+        border: '0px'
+      };
+
     return (
         <>
-            <Button className='btn btn-green' onClick={() => setModalShow(true)}>
+            <Button style={style} className='btn btn-green' onClick={() => setModalShow(true)}>
                 <i className={props.simbol}></i> {props.modalName}
             </Button>
             <PostModal
                 show={modalShow}
+                head={props.head}
                 onHide={() => setModalShow(false)}
                 thumbnail={props.thumbnail}
             />
@@ -62,9 +68,9 @@ export default function Twitch() {
                         {item.creator_name}
                     </Card.Text>
 
-                    <CreatePostInstagram modalName="Postar no Instagram" thumbnail={item.thumbnail_url}></CreatePostInstagram>
+                    <CreatePostInstagram modalName="Publicar" simbol={"fa-brands fa-instagram"} thumbnail={item.thumbnail_url} head={item.title}></CreatePostInstagram>
                     <p></p>
-                    <SetModalPlayer url={item.thumbnail_url.split("-preview", 1)[0] + ".mp4"} modalName="Assistir" name={item.title} />
+                    <SetModalPlayer simbol={"fa-solid fa-play"} url={item.thumbnail_url.split("-preview", 1)[0] + ".mp4"} modalName="Assistir" name={item.title} />
                 </Card.Body>
             </Card>)
     })

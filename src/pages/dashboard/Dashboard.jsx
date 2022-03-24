@@ -9,7 +9,7 @@ export default function Dashboard() {
             <Container className='containerUpPage'>
                 <Card>
                     <Card.Body>
-                        página principal que vai ter algo algum dia
+                        
                     </Card.Body>
                 </Card>
             </Container>
