@@ -1,9 +1,25 @@
+
+.cardTwitch {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
 .containerUpPage {
     display: flex;
     flex-wrap: wrap;
 }
 
-
 .buttons {
     margin: 10px;
   }
+
+.socialMedia {
+    display: flex;
+    flex-direction: row;
+}
+
+.buttonsSocial {
+    margin: 3px;
+}

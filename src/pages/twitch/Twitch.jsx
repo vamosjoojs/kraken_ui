@@ -10,7 +10,7 @@ function SetModalPlayer(props) {
     const [modalShow, setModalShow] = React.useState(false);
     return (
         <>
-            <Button className='btn btn-green' onClick={() => setModalShow(true)}>
+            <Button className={props.classname} onClick={() => setModalShow(true)}>
                 <i className={props.simbol}></i> {props.modalName}
             </Button>
             <CustomModal
@@ -28,12 +28,13 @@ function CreatePostInstagram(props) {
 
     const style = {
         background: '#C13584',
-        border: '0px'
-      };
+        border: '0px',
+        margin: '3px'
+    };
 
     return (
         <>
-            <Button style={style} className='btn btn-green' onClick={() => setModalShow(true)}>
+            <Button style={style} onClick={() => setModalShow(true)}>
                 <i className={props.simbol}></i> {props.modalName}
             </Button>
             <PostModal
@@ -45,6 +46,59 @@ function CreatePostInstagram(props) {
         </>
     )
 }
+
+
+function CreatePostTwitter(props) {
+    const [modalShow, setModalShow] = React.useState(false);
+
+    const style = {
+        background: '#1DA1F2',
+        border: '0px',
+        margin: '3px'
+    };
+
+    return (
+        <>
+            <Button style={style} onClick={() => setModalShow(true)}>
+                <i className={props.simbol}></i> {props.modalName}
+            </Button>
+            <PostModal
+                show={modalShow}
+                head={props.head}
+                onHide={() => setModalShow(false)}
+                thumbnail={props.thumbnail}
+            />
+        </>
+    )
+}
+
+
+function CreatePostDiscord(props) {
+    const [modalShow, setModalShow] = React.useState(false);
+
+    const style = {
+        background: '#7289da',
+        border: '0px',
+        margin: '3px'
+    };
+
+    return (
+        <>
+            <Button style={style} onClick={() => setModalShow(true)}>
+                <i className={props.simbol}></i> {props.modalName}
+            </Button>
+            <PostModal
+                show={modalShow}
+                head={props.head}
+                onHide={() => setModalShow(false)}
+                thumbnail={props.thumbnail}
+            />
+        </>
+    )
+}
+
+
+
 
 
 export default function Twitch() {
@@ -68,19 +122,33 @@ export default function Twitch() {
                         {item.creator_name}
                     </Card.Text>
 
-                    <CreatePostInstagram modalName="Publicar" simbol={"fa-brands fa-instagram"} thumbnail={item.thumbnail_url} head={item.title}></CreatePostInstagram>
-                    <p></p>
                     <SetModalPlayer simbol={"fa-solid fa-play"} url={item.thumbnail_url.split("-preview", 1)[0] + ".mp4"} modalName="Assistir" name={item.title} />
+                    <p></p>
+                    <div className="socialMedia">
+                        <CreatePostInstagram simbol={"fa-brands fa-instagram"} thumbnail={item.thumbnail_url} head={item.title}></CreatePostInstagram>
+                        <CreatePostTwitter simbol={"fa-brands fa-twitter"} thumbnail={item.thumbnail_url} head={item.title}></CreatePostTwitter>
+                        <CreatePostDiscord simbol={"fa-brands fa-discord"} thumbnail={item.thumbnail_url} head={item.title}></CreatePostDiscord>
+                    </div>
                 </Card.Body>
             </Card>)
     })
 
+    const style = {
+        display: "flex",
+        flexDirection: "row",
+        flexWrap: "wrap",
+        justifyContent: "center"
+    }
+    
+
     return (
         <div className='dashPage'>
             <Container className='containerUpPage'>
-                {lis}
-                <Button className="buttons" onClick={() => setCursor(twitchClips.cursor)}>Próxima Página</Button>
-                <Button className="buttons" onClick={() => setCursor("")}>Primeira Página</Button>
+                <Card style={style}>
+                    {lis}
+                    <Button className="buttons" onClick={() => setCursor(twitchClips.cursor)}>Próxima Página</Button>
+                    <Button className="buttons" onClick={() => setCursor("")}>Primeira Página</Button>
+                </Card>
             </Container>
         </div>);
 };

@@ -59,7 +59,7 @@ export default function PostModal(props) {
                             size="sm"
                             role="status"
                             aria-hidden="true"
-                        /> : 'Postar'}
+                        /> : 'Criar postagem'}
                         <span className="visually-hidden">Carregando...</span>
                     </Button>{' '}
                     <p></p>
@@ -72,7 +72,7 @@ export default function PostModal(props) {
                 </Form>
             </Modal.Body>
             <Modal.Footer>
-                <Button onClick={props.onHide}>Close</Button>
+                <Button onClick={props.onHide}>Fechar</Button>
             </Modal.Footer>
         </Modal>
     )
