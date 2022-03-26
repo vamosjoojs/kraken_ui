@@ -21,9 +21,11 @@ export default function PostModal(props) {
             setIsLoading(true)
             const payload = {
                 caption: caption,
-                thumbnail: props.thumbnail
+                thumbnail: props.thumbnail,
+                clip_id: props.clip_id,
+                clip_name: props.clip_name
             };
-            axiosInstance.post(Endpoints.instagram.postClip(), payload)
+            axiosInstance.post(Endpoints.twitch.postClip(), payload)
                 .then(() => {
                     setIsLoading(false)
                     setConcluded(true)

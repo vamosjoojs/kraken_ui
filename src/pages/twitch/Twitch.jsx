@@ -42,6 +42,8 @@ function CreatePostInstagram(props) {
                 head={props.head}
                 onHide={() => setModalShow(false)}
                 thumbnail={props.thumbnail}
+                clip_name={props.clip_name}
+                clip_id={props.clip_id}
             />
         </>
     )
@@ -97,10 +99,6 @@ function CreatePostDiscord(props) {
     )
 }
 
-
-
-
-
 export default function Twitch() {
     const [twitchClips, setTwitchClips] = useState([]);
     const [cursor, setCursor] = useState("");
@@ -125,7 +123,7 @@ export default function Twitch() {
                     <SetModalPlayer simbol={"fa-solid fa-play"} url={item.thumbnail_url.split("-preview", 1)[0] + ".mp4"} modalName="Assistir" name={item.title} />
                     <p></p>
                     <div className="socialMedia">
-                        <CreatePostInstagram simbol={"fa-brands fa-instagram"} thumbnail={item.thumbnail_url} head={item.title}></CreatePostInstagram>
+                        <CreatePostInstagram simbol={"fa-brands fa-instagram"} thumbnail={item.thumbnail_url} clip_id={item.clip_id} clip_name={item.title} head={item.title}></CreatePostInstagram>
                         <CreatePostTwitter simbol={"fa-brands fa-twitter"} thumbnail={item.thumbnail_url} head={item.title}></CreatePostTwitter>
                         <CreatePostDiscord simbol={"fa-brands fa-discord"} thumbnail={item.thumbnail_url} head={item.title}></CreatePostDiscord>
                     </div>
