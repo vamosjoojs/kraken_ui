@@ -61,7 +61,7 @@ function CreatePostTwitter(props) {
 
     return (
         <>
-            <Button style={style} onClick={() => setModalShow(true)}>
+            <Button disabled style={style} onClick={() => setModalShow(true)}>
                 <i className={props.simbol}></i> {props.modalName}
             </Button>
             <PostModal
@@ -86,7 +86,7 @@ function CreatePostDiscord(props) {
 
     return (
         <>
-            <Button style={style} onClick={() => setModalShow(true)}>
+            <Button disabled style={style} onClick={() => setModalShow(true)}>
                 <i className={props.simbol}></i> {props.modalName}
             </Button>
             <PostModal
@@ -112,11 +112,11 @@ export default function Twitch() {
 
     const lis = twitchClips.twitch_response?.map(item => {
         return (
-            <Card style={{ width: '18rem', padding: '5px', margin: '10px' }}>
+            <Card style={{ width: '18rem', padding: '5px', margin: '10px', backgroundColor: '#212529', color: 'white' }}>
                 <Card.Img variant="top" src={item.thumbnail_url} />
                 <Card.Body>
-                    <Card.Title>{item.title}</Card.Title>
-                    <Card.Text>
+                    <Card.Title style={{fontSize: '15px'}}>{item.title}</Card.Title>
+                    <Card.Text style={{fontSize: '10px'}}>
                         {item.creator_name}
                     </Card.Text>
 
@@ -137,16 +137,16 @@ export default function Twitch() {
         flexWrap: "wrap",
         justifyContent: "center"
     }
-    
+
 
     return (
         <div className='dashPage'>
-            <Container className='containerUpPage'>
-                <Card style={style}>
-                    {lis}
-                    <Button className="buttons" onClick={() => setCursor(twitchClips.cursor)}>Próxima Página</Button>
-                    <Button className="buttons" onClick={() => setCursor("")}>Primeira Página</Button>
-                </Card>
+            <Container className='containerUpPage' style={style}>
+                {lis}
+                <div>
+                    <Button variant="dark" className="buttons" onClick={() => setCursor(twitchClips.cursor)}>Próxima Página</Button>
+                    <Button variant="dark" className="buttons" onClick={() => setCursor("")}>Primeira Página</Button>
+                </div>
             </Container>
         </div>);
 };

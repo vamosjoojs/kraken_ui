@@ -7,11 +7,7 @@ export default function Dashboard() {
     return (
         <div className='dashPage'>
             <Container className='containerUpPage'>
-                <Card>
-                    <Card.Body>
-                        
-                    </Card.Body>
-                </Card>
+               
             </Container>
         </div>);
 };

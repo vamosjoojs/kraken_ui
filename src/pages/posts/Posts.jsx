@@ -32,10 +32,10 @@ export default function Posts() {
 
     return (
         <Container className='postPage'>
-            <Card className="cardPost">
-                <Button onClick={() => setUpdateTable(true)}> <i className="fa-solid fa-arrows-rotate"></i></Button>
-
-                <Table striped bordered hover className="table">
+            <div className="cardPost">
+                <Button variant="dark" onClick={() => setUpdateTable(true)}> <i className="fa-solid fa-arrows-rotate"></i></Button>
+                <p></p>
+                <Table hover className="table" variant="dark">
                     <thead>
                         <tr className='tr'>
                             <th>Clip Nome</th>
@@ -48,7 +48,7 @@ export default function Posts() {
                         {lis}
                     </tbody>
                 </Table>
-            </Card>
+            </div>
         </Container>);
 };
 
