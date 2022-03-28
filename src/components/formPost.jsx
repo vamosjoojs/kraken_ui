@@ -52,7 +52,7 @@ export default function PostModal(props) {
                 <Form>
                     <Form.Group className="mb-3" controlId="formBasicEmail">
                         <Form.Label>Título</Form.Label>
-                        <Form.Control type="text" placeholder="Entre com o título" onChange={titleChange} />
+                        <Form.Control required type="text" placeholder="Entre com o título" onChange={titleChange} />
                     </Form.Group>
                     <Button variant="primary" onClick={() => setsendClip(true)} disabled={isLoading == true ? true : false}>
                         {isLoading == true ? <Spinner
