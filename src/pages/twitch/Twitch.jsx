@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { Button, Container, Card } from "react-bootstrap";
+import { Button, Container, Card, Tooltip, OverlayTrigger, Spinner } from "react-bootstrap";
 import { axiosInstance } from "../../api";
 import { Endpoints } from "../../api/endpoints";
 import PostModal from "../../components/formPost";
 import CustomModal from "../../components/modalPlayer";
+import { krakenHand } from "../../utils/transformers";
 import "./twitch.css"
 
 function SetModalPlayer(props) {
@@ -25,6 +26,7 @@ function SetModalPlayer(props) {
 
 function CreatePostInstagram(props) {
     const [modalShow, setModalShow] = React.useState(false);
+    const [isPosted, setIsPosted] = React.useState(props.is_posted)
 
     const style = {
         background: '#C13584',
@@ -32,11 +34,30 @@ function CreatePostInstagram(props) {
         margin: '3px'
     };
 
+    const kraken_hand = props.kraken_hand
+
+    const renderTooltip = (props) => (
+        <Tooltip id="button-tooltip" {...props}>
+            Clip já postado no {krakenHand(kraken_hand)}
+        </Tooltip>
+    );
+
+
     return (
         <>
-            <Button style={style} onClick={() => setModalShow(true)}>
+            {isPosted === true ? <OverlayTrigger
+                placement="right"
+                delay={{ show: 250, hide: 400 }}
+                overlay={renderTooltip}
+            >
+                <span className="d-inline-block">
+                    <Button disabled={isPosted} style={style} onClick={() => setModalShow(true)}>
+                        <i className={props.simbol}></i> {props.modalName}
+                    </Button>
+                </span>
+            </OverlayTrigger> : <Button disabled={isPosted} style={style} onClick={() => setModalShow(true)}>
                 <i className={props.simbol}></i> {props.modalName}
-            </Button>
+            </Button>}
             <PostModal
                 show={modalShow}
                 head={props.head}
@@ -102,11 +123,13 @@ function CreatePostDiscord(props) {
 export default function Twitch() {
     const [twitchClips, setTwitchClips] = useState([]);
     const [cursor, setCursor] = useState("");
+    const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
         axiosInstance.get(Endpoints.twitch.getClips(cursor))
             .then(res => {
                 setTwitchClips(res.data)
+                setIsLoading(false)
             })
     }, [cursor])
 
@@ -115,15 +138,15 @@ export default function Twitch() {
             <Card style={{ width: '18rem', padding: '5px', margin: '10px', backgroundColor: '#212529', color: 'white' }}>
                 <Card.Img variant="top" src={item.thumbnail_url} />
                 <Card.Body>
-                    <Card.Title style={{fontSize: '15px'}}>{item.title}</Card.Title>
-                    <Card.Text style={{fontSize: '10px'}}>
+                    <Card.Title style={{ fontSize: '15px' }}>{item.title}</Card.Title>
+                    <Card.Text style={{ fontSize: '10px' }}>
                         {item.creator_name}
                     </Card.Text>
-
                     <SetModalPlayer simbol={"fa-solid fa-play"} url={item.thumbnail_url.split("-preview", 1)[0] + ".mp4"} modalName="Assistir" name={item.title} />
                     <p></p>
                     <div className="socialMedia">
-                        <CreatePostInstagram simbol={"fa-brands fa-instagram"} thumbnail={item.thumbnail_url} clip_id={item.clip_id} clip_name={item.title} head={item.title}></CreatePostInstagram>
+                        <div style={{ marginRight: "5px" }}>Postar em:</div>
+                        <CreatePostInstagram is_posted={item.is_posted} kraken_hand={item.kraken_hand} simbol={"fa-brands fa-instagram"} thumbnail={item.thumbnail_url} clip_id={item.clip_id} clip_name={item.title} head={item.title}></CreatePostInstagram>
                         <CreatePostTwitter simbol={"fa-brands fa-twitter"} thumbnail={item.thumbnail_url} head={item.title}></CreatePostTwitter>
                         <CreatePostDiscord simbol={"fa-brands fa-discord"} thumbnail={item.thumbnail_url} head={item.title}></CreatePostDiscord>
                     </div>
@@ -138,14 +161,21 @@ export default function Twitch() {
         justifyContent: "center"
     }
 
+    function changePage(cursor, isLoading){
+        setIsLoading(isLoading)
+        setCursor(cursor)
+    }
+
 
     return (
         <div className='dashPage'>
             <Container className='containerUpPage' style={style}>
-                {lis}
+                {isLoading === true ? <Spinner animation="border" role="status">
+                    <span className="visually-hidden">Loading...</span>
+                </Spinner> : lis}
                 <div>
-                    <Button variant="dark" className="buttons" onClick={() => setCursor(twitchClips.cursor)}>Próxima Página</Button>
-                    <Button variant="dark" className="buttons" onClick={() => setCursor("")}>Primeira Página</Button>
+                    <Button variant="dark" className="buttons" onClick={() => changePage(twitchClips.cursor, true)}>Próxima Página</Button>
+                    <Button variant="dark" className="buttons" onClick={() => changePage("", true)}>Primeira Página</Button>
                 </div>
             </Container>
         </div>);
