@@ -33,7 +33,7 @@ export default function Dashboard() {
                     icon="fa-brands fa-twitter blue fa-2x"
                 >
                 </CustomCard>
-                <CustomCard
+                {/* <CustomCard
                     title="Bot follow/unfollow"
                     //children={item.twitter_handle}
                     icon="fa-brands fa-twitter blue fa-2x"
@@ -50,7 +50,7 @@ export default function Dashboard() {
                     //children={item.twitter_handle}
                     icon="fa-brands fa-instagram blue fa-2x"
                 >
-                </CustomCard>
+                </CustomCard> */}
             </Container>
         </div>);
 };
