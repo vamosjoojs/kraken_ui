@@ -4,7 +4,7 @@ export class TwitterEndpoints {
         return `twitter/get_send_message_task`;
       }
       
-    edittBots(id) {
+    editBots(id) {
         return `twitter/edit_send_message_task?${id}`;
       }
 }

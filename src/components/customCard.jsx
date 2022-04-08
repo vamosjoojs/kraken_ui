@@ -24,20 +24,20 @@ export default (props) => {
       })
   }, [])
 
-  useEffect(() => {
-    const editBots = {
-      twitter_handle: "string",
-      oauth_token: "string",
-      oauth_secret: "string",
-      consumer_key: "string",
-      consumer_secret: "string",
-      tag: "string",
-      message: "string",
-      activated: true
-    }
-    axiosInstance.put(Endpoints.twitter.edittBots())
-      .then()
-  }, [tagChange])
+  // useEffect(() => {
+  //   const editBots = {
+  //     twitter_handle: "string",
+  //     oauth_token: "string",
+  //     oauth_secret: "string",
+  //     consumer_key: "string",
+  //     consumer_secret: "string",
+  //     tag: tag,
+  //     message: "string",
+  //     activated: true
+  //   }
+  //   axiosInstance.put(Endpoints.twitter.editBots(), editBots)
+  //     .then()
+  // }, [tagChange])
 
   const lis = twitterBots.map(item => {
     return (
@@ -56,6 +56,7 @@ export default (props) => {
               aria-label="Recipient's username"
               aria-describedby="basic-addon2"
               defaultValue={item.tag}
+              onChange={tagChange}
               disabled={disabled}
             />
             <Button onClick={() => setDisabled(false)} variant="outline-secondary" id="button-addon2">

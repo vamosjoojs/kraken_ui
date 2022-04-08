@@ -2,22 +2,29 @@ import React, { useEffect, useState } from "react";
 import { Container, Table, Card, Button } from "react-bootstrap";
 import { axiosInstance } from "../../api";
 import { Endpoints } from "../../api/endpoints";
+import { CustomPagination } from "../../components/customPagination/customPagination";
 import { dateAdjust, krakenHand, PostStatus } from "../../utils/transformers";
 import "./Post.css"
 
 export default function Posts() {
     const [queue, setQueue] = useState([]);
     const [updateTable, setUpdateTable] = useState(false);
+    const [pageNumber, setPageNumber] = React.useState(1);
+
+    const pageChange = event => {
+        setPageNumber(event.target.text);
+      }
+    
 
     useEffect(() => {
-        axiosInstance.get(Endpoints.kraken.getQueue())
+        axiosInstance.get(Endpoints.kraken.getQueue(pageNumber, 15))
             .then(res => {
                 setQueue(res.data)
                 setUpdateTable(false)
             })
-    }, [updateTable])
+    }, [updateTable, pageNumber])
 
-    const lis = queue.map(item => {
+    const lis = queue.items?.map(item => {
         {
             return (
                 <tr>
@@ -29,6 +36,8 @@ export default function Posts() {
             )
         }
     })
+
+    console.log(queue)
 
     return (
         <Container className='postPage'>
@@ -48,6 +57,7 @@ export default function Posts() {
                         {lis}
                     </tbody>
                 </Table>
+                <CustomPagination currentPage={queue.current_page} totalItems={queue.total_items} totalPages={queue.total_pages} onChange={pageChange}></CustomPagination>
             </div>
         </Container>);
 };
