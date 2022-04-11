@@ -27,7 +27,9 @@ function SetModalPlayer(props) {
 
 function CreatePostInstagram(props) {
     const [modalShow, setModalShow] = React.useState(false);
-    const [isPosted, setIsPosted] = React.useState(props.is_posted)
+    const [isPostedInstagram, setIsPostedInstagram] = React.useState(props.is_posted)
+    const [isPostedTwitter, setIsPostedTwitter] = React.useState(props.is_posted)
+    const [isPostedDiscord, setIsPostedDiscord] = React.useState(props.is_posted)
 
     const style = {
         background: '#C13584',
@@ -92,6 +94,8 @@ function CreatePostTwitter(props) {
                 onHide={() => setModalShow(false)}
                 thumbnail={props.thumbnail}
                 twitterHandle={props.twitterHandle}
+                clip_name={props.clip_name}
+                clip_id={props.clip_id}
             />
         </>
     )
@@ -148,7 +152,7 @@ export default function Twitch() {
                     <p></p>
                     <div className="socialMedia">
                         <div style={{ marginRight: "5px" }}>Postar em:</div>
-                        <CreatePostInstagram is_posted={item.is_posted} kraken_hand={item.kraken_hand} simbol={"fa-brands fa-instagram"} thumbnail={item.thumbnail_url} clip_id={item.clip_id} clip_name={item.title} head={item.title}></CreatePostInstagram>
+                        <CreatePostInstagram is_posted={item.kraken_posted} kraken_hand={item.kraken_hand} simbol={"fa-brands fa-instagram"} thumbnail={item.thumbnail_url} clip_id={item.clip_id} clip_name={item.title} head={item.title}></CreatePostInstagram>
                         <CreatePostTwitter simbol={"fa-brands fa-twitter"} thumbnail={item.thumbnail_url} head={item.title} kraken_hand={item.kraken_hand} clip_id={item.clip_id} clip_name={item.title}></CreatePostTwitter>
                         <CreatePostDiscord simbol={"fa-brands fa-discord"} thumbnail={item.thumbnail_url} head={item.title}></CreatePostDiscord>
                     </div>

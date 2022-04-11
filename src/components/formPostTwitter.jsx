@@ -32,11 +32,14 @@ export default function PostModalTwitter(props) {
                 clip_id: props.clip_id,
                 clip_name: props.clip_name
             };
+
+            console.log(payload)
             axiosInstance.post(Endpoints.twitch.postClipTwitter(), payload)
                 .then(() => {
                     setIsLoading(false)
                     setConcluded(true)
                 }).catch(error => {
+                    console.log(error)
                     setConcludedWithError(true)
                     setIsLoading(false)
                 })
@@ -83,7 +86,7 @@ export default function PostModalTwitter(props) {
                         </Form.Control>
                     </Form.Group>
                     <p></p>
-                    <Button type="submit" variant="primary" onClick={() => setsendClip(true)} disabled={isLoading == true ? true : false}>
+                    <Button variant="primary" onClick={() => setsendClip(true)} disabled={isLoading == true ? true : false}>
                         {isLoading == true ? <Spinner
                             as="span"
                             animation="border"
@@ -98,7 +101,7 @@ export default function PostModalTwitter(props) {
                         Vídeo postado com sucesso!
                     </Alert>
                     <Alert show={concludedWithError} variant="danger">
-                        Video já está no Twitter!
+                        Erro ao postar o vídeo!
                     </Alert>
                 </Form>
             </Modal.Body>
