@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Button, Container, Card, Tooltip, OverlayTrigger, Spinner } from "react-bootstrap";
+import { Button, Container, Card, Tooltip, OverlayTrigger, Spinner, Form } from "react-bootstrap";
 import { axiosInstance } from "../../api";
 import { Endpoints } from "../../api/endpoints";
 import PostModal from "../../components/formPost";
@@ -161,7 +161,7 @@ export default function Twitch() {
         justifyContent: "center"
     }
 
-    function changePage(cursor, isLoading){
+    function changePage(cursor, isLoading) {
         setIsLoading(isLoading)
         setCursor(cursor)
     }
@@ -169,15 +169,16 @@ export default function Twitch() {
 
     return (
         <div className='dashPage'>
+            <Container className="headTwitch">
+                <Button variant="dark" className="buttons" onClick={() => changePage(twitchClips.cursor, true)}>Próxima Página</Button>
+                <Button variant="dark" className="buttons" onClick={() => changePage("", true)}>Primeira Página</Button>
+            </Container>
             <Container className='containerUpPage' style={style}>
                 {isLoading === true ? <Spinner animation="border" role="status">
                     <span className="visually-hidden">Loading...</span>
                 </Spinner> : lis}
-                <div>
-                    <Button variant="dark" className="buttons" onClick={() => changePage(twitchClips.cursor, true)}>Próxima Página</Button>
-                    <Button variant="dark" className="buttons" onClick={() => changePage("", true)}>Primeira Página</Button>
-                </div>
             </Container>
+
         </div>);
 };
 

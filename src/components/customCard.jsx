@@ -10,10 +10,19 @@ export default (props) => {
   const [key, setKey] = useState();
   const [twitterBots, setTwitterBots] = useState([]);
   const [tag, setTag] = useState("");
+  const [message, setMessage] = useState("");
+  const [isActive, setisActive] = useState("");
+  const [edit, setEdit] = useState("");
   const [disabled, setDisabled] = useState(true);
 
   const tagChange = event => {
     setTag(event.target.value);
+  }
+  const messageChange = event => {
+    setMessage(event.target.value);
+  }
+  const isActiveChange = event => {
+    setisActive(event.target.value);
   }
 
 
@@ -24,20 +33,23 @@ export default (props) => {
       })
   }, [])
 
-  // useEffect(() => {
-  //   const editBots = {
-  //     twitter_handle: "string",
-  //     oauth_token: "string",
-  //     oauth_secret: "string",
-  //     consumer_key: "string",
-  //     consumer_secret: "string",
-  //     tag: tag,
-  //     message: "string",
-  //     activated: true
-  //   }
-  //   axiosInstance.put(Endpoints.twitter.editBots(), editBots)
-  //     .then()
-  // }, [tagChange])
+  useEffect(() => {
+    const editBots = {
+      twitter_handle: edit.twitter_handle,
+      oauth_token: edit.oauth_token,
+      oauth_secret: edit.oauth_secret,
+      consumer_key: edit.consumer_key,
+      consumer_secret: edit.consumer_secret,
+      tag: tag || edit.tag,
+      message: message || edit.message,
+      activated: isActive || edit.activated
+    }
+    if (edit !== "") {
+      axiosInstance.put(Endpoints.twitter.editBots(edit.id), editBots)
+        .then(setDisabled(true))
+    }
+  }, [edit])
+
 
   const lis = twitterBots.map(item => {
     return (
@@ -46,35 +58,43 @@ export default (props) => {
           Total de usuários enviados: {item.total_sended}
         </Badge>{' '}
         <Form>
+          <div className="buttonsForm">
+            {
+              disabled === true ? <>
+                <Button style={{ margin: "5px" }} variant="dark" onClick={() => setDisabled(false)}>
+                  Editar <i class="fa-solid fa-pen"></i>
+                </Button>
+              </> :
+                <>
+                  <Button style={{ margin: "5px" }} variant="dark" onClick={() => setEdit(item)}>
+                    Salvar <i class="fa-solid fa-check"></i>
+                  </Button>
+                  <Button style={{ margin: "5px" }} variant="dark" onClick={() => setDisabled(true)}>
+                    Cancelar edição
+                  </Button>
+                </>
+            }
+          </div>
           <Form.Group className="mb-3" controlId="formBasicEmail">
-            <Form.Label>Twitter handle</Form.Label>
-            <Form.Control type="text" disabled defaultValue={item.twitter_handle} />
+            <Form.Label>Tag</Form.Label>
+            <Form.Control type="text" disabled={disabled} defaultValue={item.tag} onChange={tagChange} />
           </Form.Group>
-          <InputGroup className="mb-3">
-            <FormControl
-              placeholder="Recipient's username"
-              aria-label="Recipient's username"
-              aria-describedby="basic-addon2"
-              defaultValue={item.tag}
-              onChange={tagChange}
-              disabled={disabled}
-            />
-            <Button onClick={() => setDisabled(false)} variant="outline-secondary" id="button-addon2">
-              <i class="fa-solid fa-pen"></i>
-            </Button>
-          </InputGroup>
           <Form.Group className="mb-3" controlId="formBasicEmail">
-            <Form.Label>Message</Form.Label>
-            <Form.Control as="textarea" rows={4} disabled defaultValue={item.message} />
+            <Form.Label>Mensagem</Form.Label>
+            <Form.Control as="textarea" rows={4} disabled={disabled} defaultValue={item.message} onChange={messageChange} />
           </Form.Group>
           <Form.Group className="mb-3" controlId="formBasicEmail">
-            <Form.Label>Activated</Form.Label>
-            <Form.Control type="text" disabled defaultValue={item.activated} />
+            <Form.Label>Ativado</Form.Label>
+            <Form.Control type="text" disabled={disabled} defaultValue={item.activated} onChange={isActiveChange} />
           </Form.Group>
           <Accordion>
             <Accordion.Item eventKey="0">
               <Accordion.Header>Chaves e Conexões</Accordion.Header>
               <Accordion.Body>
+                <Form.Group className="mb-3" controlId="formBasicEmail">
+                  <Form.Label>Twitter handle</Form.Label>
+                  <Form.Control type="text" disabled defaultValue={item.twitter_handle} />
+                </Form.Group>
                 <Form.Group className="mb-3" controlId="formBasicEmail">
                   <Form.Label>Consumer key</Form.Label>
                   <Form.Control type="text" disabled defaultValue={item.consumer_key} />
@@ -94,10 +114,6 @@ export default (props) => {
               </Accordion.Body>
             </Accordion.Item>
           </Accordion>
-          <p></p>
-          <Button disabled={disabled} variant="primary" type="submit">
-            Salvar
-          </Button>
         </Form>
       </Tab>
     )

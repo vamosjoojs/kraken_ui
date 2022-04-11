@@ -22,3 +22,8 @@
     flex-direction: column;
     justify-content: space-around;
 }
+
+.buttonsForm {
+    display: flex;
+    flex-direction: row-reverse; 
+}

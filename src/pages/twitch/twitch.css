@@ -12,7 +12,7 @@
 }
 
 .buttons {
-    margin: 10px;
+    margin: 15px;
   }
 
 .socialMedia {
@@ -22,4 +22,10 @@
 
 .buttonsSocial {
     margin: 3px;
+}
+
+.headTwitch {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
 }
