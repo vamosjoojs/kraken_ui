@@ -3,6 +3,7 @@ import { Button, Container, Card, Tooltip, OverlayTrigger, Spinner, Form } from 
 import { axiosInstance } from "../../api";
 import { Endpoints } from "../../api/endpoints";
 import PostModal from "../../components/formPost";
+import PostModalTwitter from "../../components/formPostTwitter";
 import CustomModal from "../../components/modalPlayer";
 import { krakenHand } from "../../utils/transformers";
 import "./twitch.css"
@@ -82,14 +83,15 @@ function CreatePostTwitter(props) {
 
     return (
         <>
-            <Button disabled style={style} onClick={() => setModalShow(true)}>
+            <Button style={style} onClick={() => setModalShow(true)}>
                 <i className={props.simbol}></i> {props.modalName}
             </Button>
-            <PostModal
+            <PostModalTwitter
                 show={modalShow}
                 head={props.head}
                 onHide={() => setModalShow(false)}
                 thumbnail={props.thumbnail}
+                twitterHandle={props.twitterHandle}
             />
         </>
     )
@@ -147,7 +149,7 @@ export default function Twitch() {
                     <div className="socialMedia">
                         <div style={{ marginRight: "5px" }}>Postar em:</div>
                         <CreatePostInstagram is_posted={item.is_posted} kraken_hand={item.kraken_hand} simbol={"fa-brands fa-instagram"} thumbnail={item.thumbnail_url} clip_id={item.clip_id} clip_name={item.title} head={item.title}></CreatePostInstagram>
-                        <CreatePostTwitter simbol={"fa-brands fa-twitter"} thumbnail={item.thumbnail_url} head={item.title}></CreatePostTwitter>
+                        <CreatePostTwitter simbol={"fa-brands fa-twitter"} thumbnail={item.thumbnail_url} head={item.title} kraken_hand={item.kraken_hand} clip_id={item.clip_id} clip_name={item.title}></CreatePostTwitter>
                         <CreatePostDiscord simbol={"fa-brands fa-discord"} thumbnail={item.thumbnail_url} head={item.title}></CreatePostDiscord>
                     </div>
                 </Card.Body>

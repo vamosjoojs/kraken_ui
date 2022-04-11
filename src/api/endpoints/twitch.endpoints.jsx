@@ -11,4 +11,8 @@ export class TwitchEndpoints {
   postClip() {
     return `twitch/post_instagram_clip`;
   }
+  
+  postClipTwitter() {
+    return `twitch/post_twitter_clip`;
+  }
 }
