@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { Button, Container, Card, Tooltip, OverlayTrigger, Spinner, Form } from "react-bootstrap";
+import { Button, Container, Card, Tooltip, OverlayTrigger, Spinner } from "react-bootstrap";
 import { axiosInstance } from "../../api";
 import { Endpoints } from "../../api/endpoints";
 import PostModal from "../../components/formPost";
 import PostModalTwitter from "../../components/formPostTwitter";
 import CustomModal from "../../components/modalPlayer";
-import { krakenHand } from "../../utils/transformers";
 import "./twitch.css"
 
 function SetModalPlayer(props) {
@@ -27,9 +26,13 @@ function SetModalPlayer(props) {
 
 function CreatePostInstagram(props) {
     const [modalShow, setModalShow] = React.useState(false);
-    const [isPostedInstagram, setIsPostedInstagram] = React.useState(props.is_posted)
-    const [isPostedTwitter, setIsPostedTwitter] = React.useState(props.is_posted)
-    const [isPostedDiscord, setIsPostedDiscord] = React.useState(props.is_posted)
+    let isPostedInstagram = false
+
+    for (var idx in props.isPosted) {
+        if (props.isPosted[idx].kraken_hand == 'INSTAGRAM') {
+            isPostedInstagram = props.isPosted[idx].is_posted
+        }
+    }
 
     const style = {
         background: '#C13584',
@@ -37,28 +40,26 @@ function CreatePostInstagram(props) {
         margin: '3px'
     };
 
-    const kraken_hand = props.kraken_hand
-
     const renderTooltip = (props) => (
         <Tooltip id="button-tooltip" {...props}>
-            Clip já postado no {krakenHand(kraken_hand)}
+            Clip já postado no Instagram
         </Tooltip>
     );
 
 
     return (
         <>
-            {isPosted === true ? <OverlayTrigger
+            {isPostedInstagram === true ? <OverlayTrigger
                 placement="right"
                 delay={{ show: 250, hide: 400 }}
                 overlay={renderTooltip}
             >
                 <span className="d-inline-block">
-                    <Button disabled={isPosted} style={style} onClick={() => setModalShow(true)}>
+                    <Button disabled={isPostedInstagram} style={style} onClick={() => setModalShow(true)}>
                         <i className={props.simbol}></i> {props.modalName}
                     </Button>
                 </span>
-            </OverlayTrigger> : <Button disabled={isPosted} style={style} onClick={() => setModalShow(true)}>
+            </OverlayTrigger> : <Button disabled={isPostedInstagram} style={style} onClick={() => setModalShow(true)}>
                 <i className={props.simbol}></i> {props.modalName}
             </Button>}
             <PostModal
@@ -76,6 +77,19 @@ function CreatePostInstagram(props) {
 
 function CreatePostTwitter(props) {
     const [modalShow, setModalShow] = React.useState(false);
+    let isPostedTwitter = false
+
+    for (var idx in props.isPosted) {
+        if (props.isPosted[idx].kraken_hand == 'TWITTER') {
+            isPostedTwitter = props.isPosted[idx].is_posted
+        }
+    }
+
+    const renderTooltip = (props) => (
+        <Tooltip id="button-tooltip" {...props}>
+            Clip já postado no Twitter
+        </Tooltip>
+    );
 
     const style = {
         background: '#1DA1F2',
@@ -85,9 +99,19 @@ function CreatePostTwitter(props) {
 
     return (
         <>
-            <Button style={style} onClick={() => setModalShow(true)}>
+            {isPostedTwitter === true ? <OverlayTrigger
+                placement="right"
+                delay={{ show: 250, hide: 400 }}
+                overlay={renderTooltip}
+            >
+                <span className="d-inline-block">
+                    <Button disabled={isPostedTwitter} style={style} onClick={() => setModalShow(true)}>
+                        <i className={props.simbol}></i> {props.modalName}
+                    </Button>
+                </span>
+            </OverlayTrigger> : <Button disabled={isPostedTwitter} style={style} onClick={() => setModalShow(true)}>
                 <i className={props.simbol}></i> {props.modalName}
-            </Button>
+            </Button>}
             <PostModalTwitter
                 show={modalShow}
                 head={props.head}
@@ -152,8 +176,8 @@ export default function Twitch() {
                     <p></p>
                     <div className="socialMedia">
                         <div style={{ marginRight: "5px" }}>Postar em:</div>
-                        <CreatePostInstagram is_posted={item.kraken_posted} kraken_hand={item.kraken_hand} simbol={"fa-brands fa-instagram"} thumbnail={item.thumbnail_url} clip_id={item.clip_id} clip_name={item.title} head={item.title}></CreatePostInstagram>
-                        <CreatePostTwitter simbol={"fa-brands fa-twitter"} thumbnail={item.thumbnail_url} head={item.title} kraken_hand={item.kraken_hand} clip_id={item.clip_id} clip_name={item.title}></CreatePostTwitter>
+                        <CreatePostInstagram isPosted={item.kraken_posted} kraken_hand={item.kraken_hand} simbol={"fa-brands fa-instagram"} thumbnail={item.thumbnail_url} clip_id={item.clip_id} clip_name={item.title} head={item.title}></CreatePostInstagram>
+                        <CreatePostTwitter isPosted={item.kraken_posted} simbol={"fa-brands fa-twitter"} thumbnail={item.thumbnail_url} head={item.title} kraken_hand={item.kraken_hand} clip_id={item.clip_id} clip_name={item.title}></CreatePostTwitter>
                         <CreatePostDiscord simbol={"fa-brands fa-discord"} thumbnail={item.thumbnail_url} head={item.title}></CreatePostDiscord>
                     </div>
                 </Card.Body>

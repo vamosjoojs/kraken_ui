@@ -12,6 +12,9 @@ export function krakenHand(kraken) {
     if (kraken === 'INSTAGRAM') {
         return 'Instagram'
     }
+    if (kraken === 'TWITTER') {
+        return 'Twitter'
+    }
     
 }
 

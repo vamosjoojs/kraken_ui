@@ -47,12 +47,15 @@ export default function PostModalTwitter(props) {
     }, sendClip)
 
     useEffect(() => {
-        axiosInstance.get(Endpoints.twitter.getBots())
-            .then(res => {
-                setTwitterBot(res.data)
-            }
-            )
-    }, [])
+        if (props.show === true) {
+            axiosInstance.get(Endpoints.twitter.getBots())
+                .then(res => {
+                    setTwitterBot(res.data)
+                }
+                )
+
+        }
+    }, [props.show])
 
     const lis = twitterBot.map(item => {
         return (
