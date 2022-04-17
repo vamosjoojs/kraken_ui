@@ -10,6 +10,7 @@ export default (props) => {
   const [key, setKey] = useState();
   const [twitterBots, setTwitterBots] = useState([]);
   const [tag, setTag] = useState("");
+  const [resultType, setResultType] = useState("");
   const [message, setMessage] = useState("");
   const [isActive, setisActive] = useState("");
   const [edit, setEdit] = useState("");
@@ -23,6 +24,9 @@ export default (props) => {
   }
   const isActiveChange = event => {
     setisActive(event.target.value);
+  }
+  const resultTypeChange = event => {
+    setResultType(event.target.value);
   }
 
 
@@ -41,6 +45,7 @@ export default (props) => {
       consumer_key: edit.consumer_key,
       consumer_secret: edit.consumer_secret,
       tag: tag || edit.tag,
+      result_type: resultType || edit.result_type,
       message: message || edit.message,
       activated: isActive || edit.activated
     }
@@ -78,6 +83,10 @@ export default (props) => {
           <Form.Group className="mb-3" controlId="formBasicEmail">
             <Form.Label>Tag</Form.Label>
             <Form.Control type="text" disabled={disabled} defaultValue={item.tag} onChange={tagChange} />
+          </Form.Group>
+          <Form.Group className="mb-3" controlId="formBasicEmail">
+            <Form.Label>Result type</Form.Label>
+            <Form.Control type="text" disabled={disabled} defaultValue={item.result_type} onChange={resultTypeChange} />
           </Form.Group>
           <Form.Group className="mb-3" controlId="formBasicEmail">
             <Form.Label>Mensagem</Form.Label>
