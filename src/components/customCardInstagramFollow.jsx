@@ -8,19 +8,15 @@ import "./CustomCard.css"
 export default (props) => {
   const [modalShow, setModalShow] = React.useState(false);
   const [key, setKey] = useState();
-  const [twitterBots, setTwitterBots] = useState([]);
+  const [instagramBots, setInstagramBots] = useState([]);
   const [tag, setTag] = useState("");
   const [resultType, setResultType] = useState("");
-  const [message, setMessage] = useState("");
   const [isActive, setisActive] = useState("");
   const [edit, setEdit] = useState("");
   const [disabled, setDisabled] = useState(true);
 
   const tagChange = event => {
     setTag(event.target.value);
-  }
-  const messageChange = event => {
-    setMessage(event.target.value);
   }
   const isActiveChange = event => {
     setisActive(event.target.value);
@@ -31,37 +27,28 @@ export default (props) => {
 
 
   useEffect(() => {
-    axiosInstance.get(Endpoints.twitter.getBotMessage())
+    axiosInstance.get(Endpoints.instagram.getFollow())
       .then(res => {
-        setTwitterBots(res.data)
+        setInstagramBots(res.data)
       })
   }, [])
 
-  useEffect(() => {
-    const editBots = {
-      twitter_handle: edit.twitter_handle,
-      oauth_token: edit.oauth_token,
-      oauth_secret: edit.oauth_secret,
-      consumer_key: edit.consumer_key,
-      consumer_secret: edit.consumer_secret,
-      tag: tag || edit.tag,
-      result_type: resultType || edit.result_type,
-      message: message || edit.message,
-      activated: isActive || edit.activated
-    }
-    if (edit !== "") {
-      axiosInstance.put(Endpoints.twitter.editBots(edit.id), editBots)
-        .then(setDisabled(true))
-    }
-  }, [edit])
+  // useEffect(() => {
+  //   const editBots = {
+  //     twitter_handle: edit.twitter_handle,
+  //     tag: tag || edit.tag,
+  //     result_type: resultType || edit.result_type,
+  //   }
+  //   if (edit !== "") {
+  //     axiosInstance.put(Endpoints.twitter.editBots(edit.id), editBots)
+  //       .then(setDisabled(true))
+  //   }
+  // }, [edit])
 
 
-  const lis = twitterBots.map(item => {
+  const lis = instagramBots.map(item => {
     return (
-      <Tab eventKey={item.twitter_handle} title={item.twitter_handle}>
-        <Badge pill bg="info">
-          Total de usuários enviados: {item.total_sended}
-        </Badge>{' '}
+      <Tab eventKey={item.instagram_handle} title={item.instagram_handle}>
         <Form>
           <div className="buttonsForm">
             {
@@ -85,44 +72,9 @@ export default (props) => {
             <Form.Control type="text" disabled={disabled} defaultValue={item.tag} onChange={tagChange} />
           </Form.Group>
           <Form.Group className="mb-3" controlId="formBasicEmail">
-            <Form.Label>Result type</Form.Label>
-            <Form.Control type="text" disabled={disabled} defaultValue={item.result_type} onChange={resultTypeChange} />
-          </Form.Group>
-          <Form.Group className="mb-3" controlId="formBasicEmail">
-            <Form.Label>Mensagem</Form.Label>
-            <Form.Control as="textarea" rows={4} disabled={disabled} defaultValue={item.message} onChange={messageChange} />
-          </Form.Group>
-          <Form.Group className="mb-3" controlId="formBasicEmail">
             <Form.Label>Ativado</Form.Label>
             <Form.Control type="text" disabled={disabled} defaultValue={item.activated} onChange={isActiveChange} />
           </Form.Group>
-          <Accordion>
-            <Accordion.Item eventKey="0">
-              <Accordion.Header>Chaves e Conexões</Accordion.Header>
-              <Accordion.Body>
-                <Form.Group className="mb-3" controlId="formBasicEmail">
-                  <Form.Label>Twitter handle</Form.Label>
-                  <Form.Control type="text" disabled defaultValue={item.twitter_handle} />
-                </Form.Group>
-                <Form.Group className="mb-3" controlId="formBasicEmail">
-                  <Form.Label>Consumer key</Form.Label>
-                  <Form.Control type="text" disabled defaultValue={item.consumer_key} />
-                </Form.Group>
-                <Form.Group className="mb-3" controlId="formBasicEmail">
-                  <Form.Label>Consumer secret</Form.Label>
-                  <Form.Control type="password" disabled defaultValue={item.consumer_secret} />
-                </Form.Group>
-                <Form.Group className="mb-3" controlId="formBasicEmail">
-                  <Form.Label>Oauth token</Form.Label>
-                  <Form.Control type="text" disabled defaultValue={item.oauth_token} />
-                </Form.Group>
-                <Form.Group className="mb-3" controlId="formBasicEmail">
-                  <Form.Label>Oauth secret</Form.Label>
-                  <Form.Control type="password" disabled defaultValue={item.oauth_secret} />
-                </Form.Group>
-              </Accordion.Body>
-            </Accordion.Item>
-          </Accordion>
         </Form>
       </Tab>
     )
@@ -157,7 +109,7 @@ export default (props) => {
         centered>
         <Modal.Header closeButton onHide={() => setModalShow(false)}>
           <h3>
-            Bot de envio de mensagens no Twitter
+            Bot de follow e unfollow no Instagram
           </h3>
 
         </Modal.Header>

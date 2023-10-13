@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { Button, Container, Card, Tooltip, OverlayTrigger, Spinner } from "react-bootstrap";
+import { Button, Card, Container, Spinner, Table } from "react-bootstrap";
 import { axiosInstance } from "../../api";
 import { Endpoints } from "../../api/endpoints";
 import { CustomPagination } from "../../components/customPagination/customPagination";
 import CustomModal from "../../components/modalPlayer";
 import PostButton from "../../components/postButton";
-import "./twitch.css"
+import "./youtubeClips.css"
+
 
 function SetModalPlayer(props) {
     const [modalShow, setModalShow] = React.useState(false);
@@ -24,28 +25,29 @@ function SetModalPlayer(props) {
     );
 }
 
-export default function Twitch() {
-    const [twitchClips, setTwitchClips] = useState([]);
+export default function YoutubeClips() {
+    const [youtubeClips, setYoutubeClips] = useState([]);
     const [pageNumber, setPageNumber] = React.useState(1);
     const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
-        axiosInstance.get(Endpoints.twitch.getClips(pageNumber))
+        axiosInstance.get(Endpoints.youtube.getAllClips(pageNumber))
             .then(res => {
-                setTwitchClips(res.data)
+                setYoutubeClips(res.data)
                 setIsLoading(false)
             })
     }, [pageNumber])
 
-    const lis = twitchClips.items?.map(item => {
+    const lis = youtubeClips.items?.map(item => {
+        console.log(item.thumbnail_url)
         return (
             <Card style={{ width: '18rem', padding: '5px', margin: '5px', backgroundColor: '#212529', color: 'white' }}>
-                <Card.Img variant="top" src={item.thumbnail_url || item.url} />
+                <Card.Img variant="top" src={item.thumbnail_url || "/default_image.png"} />
                 <Card.Body>
                     <Card.Title style={{ fontSize: '15px' }}>{item.title}</Card.Title>
                     <div className="youtButtons">
-                        <PostButton simbol={"fa-solid fa-share"} modalName="Postar" name={item.title} isPosted={item.kraken_posted} kraken_hand={item.kraken_hand} kraken_head={'TWITCH'} url={item.url} clip_id={item.clip_id} clip_name={item.title} id={item.id}></PostButton>
-                        <SetModalPlayer simbol={"fa-solid fa-play"} url={item.url.split("-preview", 1)[0] + ".mp4"} modalName="Assistir" name={item.title} />
+                        <PostButton simbol={"fa-solid fa-share"} modalName="Postar" name={item.title} isPosted={item.kraken_posted} kraken_hand={item.kraken_hand} kraken_head={'YOUTUBE'} url={item.url} clip_id={item.clip_id} clip_name={item.title} id={item.id}></PostButton>
+                        <SetModalPlayer simbol={"fa-solid fa-play"} url={item.url} modalName="Assistir" name={item.title} />
                     </div>
                 </Card.Body>
             </Card>)
@@ -70,9 +72,8 @@ export default function Twitch() {
                 </Spinner> : lis}
             </Container>
             <Container className='containerUpPage' style={style}>
-                <CustomPagination currentPage={twitchClips.current_page} totalItems={twitchClips.total_items} totalPages={twitchClips.total_pages} onChange={pageChange}></CustomPagination>
+                <CustomPagination currentPage={youtubeClips.current_page} totalItems={youtubeClips.total_items} totalPages={youtubeClips.total_pages} onChange={pageChange}></CustomPagination>
             </Container>
-
         </div>);
 };
 

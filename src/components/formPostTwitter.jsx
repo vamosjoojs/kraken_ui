@@ -26,15 +26,15 @@ export default function PostModalTwitter(props) {
         if (sendClip === true) {
             setIsLoading(true)
             const payload = {
+                id: props?.id,
                 twitter_handle: twitterHandle,
                 caption: caption,
-                thumbnail: props.thumbnail,
+                url: props.url,
                 clip_id: props.clip_id,
-                clip_name: props.clip_name
+                clip_name: props.clip_name,
+                kraken_head: props.kraken_head
             };
-
-            console.log(payload)
-            axiosInstance.post(Endpoints.twitch.postClipTwitter(), payload)
+            axiosInstance.post(Endpoints.kraken.postClipTwitter(), payload)
                 .then(() => {
                     setIsLoading(false)
                     setConcluded(true)
@@ -48,7 +48,7 @@ export default function PostModalTwitter(props) {
 
     useEffect(() => {
         if (props.show === true) {
-            axiosInstance.get(Endpoints.twitter.getBots())
+            axiosInstance.get(Endpoints.twitter.getBotMessage())
                 .then(res => {
                     setTwitterBot(res.data)
                 }

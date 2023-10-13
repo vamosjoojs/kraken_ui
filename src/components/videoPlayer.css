@@ -1,0 +1,12 @@
+.media-buttons {
+    display: grid;
+    grid-auto-flow: column;
+    grid-column-gap: 10px;
+}
+
+.noUi-horizontal .noUi-handle {
+    width: 20px;
+    height: 26px;
+    right: -17px;
+    top: -5px;
+}
