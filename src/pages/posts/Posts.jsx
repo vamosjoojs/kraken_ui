@@ -44,7 +44,7 @@ export default function Posts() {
     return (
         <Container className='postPage'>
             <div className="cardPost">
-                <Button variant="dark" onClick={() => setUpdateTable(true)}> <i className="fa-solid fa-arrows-rotate"></i></Button>
+                <Button variant="dark" onClick={() => setUpdateTable(true)}> Atualizar <i className="fa-solid fa-arrows-rotate"></i></Button>
                 <p></p>
                 <Table hover className="table" variant="dark" size="sm">
                     <thead>

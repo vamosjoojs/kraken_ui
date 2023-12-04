@@ -85,8 +85,8 @@ export default function Youtube() {
     return (
         <div className='dashPage'>
             <Container className="headTwitch">
--                <Button variant="dark" className="buttons" onClick={() => changePage("", true)}>Página Anterior</Button>
--                <Button variant="dark" className="buttons" onClick={() => changePage(twitchClips.cursor, true)}>Próxima Anterior</Button>
+-                <Button variant="dark" className="buttons" onClick={() => changePage("", true)}>Primeira Página</Button>
+-                <Button variant="dark" className="buttons" onClick={() => changePage(twitchClips.cursor, true)}>Próxima Página</Button>
 -            </Container>
             <Container className='containerUpPage' style={style}>
                 {isLoading === true ? <Spinner animation="border" role="status">

@@ -117,7 +117,7 @@ export default function RepostModal(props) {
         >
             <Modal.Header closeButton>
                 <Modal.Title id="contained-modal-title-vcenter">
-                    {props.head}
+                    {props.kraken_hand}
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body>

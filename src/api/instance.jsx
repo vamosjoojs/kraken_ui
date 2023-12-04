@@ -6,7 +6,7 @@ export function getToken(){
 }
 
 const axiosInstance = axios.create({
-  baseURL: 'http://kraken.meshdebts.org/api',
+  baseURL: 'http://kraken-backend.webdebt.net/api',
   //baseURL: 'http://localhost:8000/api',
   timeout: 20000,  
   headers: getToken()

@@ -6,6 +6,7 @@ import { CustomPagination } from "../../components/customPagination/customPagina
 import CustomModal from "../../components/modalPlayer";
 import PostButton from "../../components/postButton";
 import "./twitch.css"
+import CustomModalEdit from "../../components/modalEditPlayer";
 
 function SetModalPlayer(props) {
     const [modalShow, setModalShow] = React.useState(false);
