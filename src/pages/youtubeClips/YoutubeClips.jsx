@@ -6,6 +6,8 @@ import { CustomPagination } from "../../components/customPagination/customPagina
 import CustomModal from "../../components/modalPlayer";
 import PostButton from "../../components/postButton";
 import "./youtubeClips.css"
+import loadingImage from "../../assets/load.gif";
+
 
 
 function SetModalPlayer(props) {
@@ -39,10 +41,9 @@ export default function YoutubeClips() {
     }, [pageNumber])
 
     const lis = youtubeClips.items?.map(item => {
-        console.log(item.thumbnail_url)
         return (
             <Card style={{ width: '18rem', padding: '5px', margin: '5px', backgroundColor: '#212529', color: 'white' }}>
-                <Card.Img variant="top" src={item.thumbnail_url || "/default_image.png"} />
+                <Card.Img variant="top" src={(item.thumbnail_url === 'loading')? loadingImage: item.thumbnail_url} />
                 <Card.Body>
                     <Card.Title style={{ fontSize: '15px' }}>{item.title}</Card.Title>
                     <div className="youtButtons">
